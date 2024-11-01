@@ -128,7 +128,7 @@ while True:
     window.update()
     
     for alien in alien_group.aliens:
-        alien.sety(alien.ycor() - 3)
+        alien.sety(alien.ycor() - 2)
 
         if alien.ycor() < -300:
             alien_group.hide()

@@ -128,12 +128,10 @@ while True:
     window.update()
     
     for alien in alien_group.aliens:
-        alien.sety(alien.ycor() - 3)
+        alien.sety(alien.ycor() - 2)
 
         if alien.ycor() < -300:
-            alien_group.hide()
-            mainchara.hide()
-            scoreboard.losing()
+            alien.goto(random.randint(-300, 300), random.randint(100, 250))
         
         if mainchara.Mainchara.distance(alien) < 20:
             alien_group.hide()
@@ -148,7 +146,7 @@ while True:
             alien.hits += 1  # Increment hits
 
 
-    
+
             if scoreboard.score >= 50:
                 if alien.hits >= 2:  # Require 2 hits if score >= 200
                     hit_message_turtle.goto(0, 200)

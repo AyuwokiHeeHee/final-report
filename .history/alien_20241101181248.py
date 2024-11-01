@@ -1,3 +1,4 @@
+
 import turtle
 import random
 
@@ -57,7 +58,7 @@ class Scoreboard:
         self.score_board.color('white')
         self.score_board.penup()
         self.score_board.goto(0, 250)
-        self.score_board.hideturtle()
+        self.score_board.showturtle()
         self.update_score()
 
     def update_score(self):
@@ -67,19 +68,6 @@ class Scoreboard:
     def increment_score(self):
         self.score += 10
         self.update_score()
-    
-    def losing(self):
-        self.score_board.clear()
-        self.score_board.write(f'Final Score: {self.score}', align='center', font=('Courier', 50, 'normal'))
-    
-    def displaymessagewhenturn200(self):
-        self.scoreboard.write(f'Enemy now need 2 hits to die', align='center')
-
-    def clearmessage(self):
-        message.clear()
-        
-
-
 
 class Alien:
     def __init__(self):
@@ -91,7 +79,7 @@ class Alien:
             alien.shape(r'/Users/mac/Desktop/final-report/Untitled/e1 .gif')
             alien.penup()
             alien.goto(random.randint(-300, 300), random.randint(100, 250))
-            alien.hits = 0
+            alien.hits = 0  # Track hits
             self.aliens.append(alien)
 
     def hide(self):
@@ -109,12 +97,6 @@ laser = Laser()
 alien_group = Alien()
 scoreboard = Scoreboard()
 
-hit_message_turtle = turtle.Turtle()
-hit_message_turtle.speed(0)
-hit_message_turtle.color('yellow')
-hit_message_turtle.penup()
-hit_message_turtle.hideturtle()
-
 window.listen()
 window.onkeypress(mainchara.trai, 'a')
 window.onkeypress(mainchara.phai, 'd')
@@ -128,17 +110,15 @@ while True:
     window.update()
     
     for alien in alien_group.aliens:
-        alien.sety(alien.ycor() - 3)
+        alien.sety(alien.ycor() - 8)
 
         if alien.ycor() < -300:
-            alien_group.hide()
-            mainchara.hide()
-            scoreboard.losing()
+            alien.goto(random.randint(-300, 300), random.randint(100, 250))
         
         if mainchara.Mainchara.distance(alien) < 20:
             alien_group.hide()
             mainchara.hide()
-            scoreboard.losing()
+            turtle.write(f'YOU LOSE', align='center', font=('Courier', 50, 'normal','white')) 
     
 
 
@@ -148,13 +128,9 @@ while True:
             alien.hits += 1  # Increment hits
 
 
-    
-            if scoreboard.score >= 50:
+
+            if scoreboard.score >= 200:
                 if alien.hits >= 2:  # Require 2 hits if score >= 200
-                    hit_message_turtle.goto(0, 200)
-                    hit_message_turtle.write('Enemies now need 2 hits to die', align='center', font=('Courier', 18,'normal'))
-                    window.ontimer(hit_message_turtle.clear, 3000) 
-                    hit_message_turtle.hideturtle()
                     alien.goto(random.randint(-300, 300), random.randint(100, 250))
                     alien.hits = 0  # Reset hits
                     scoreboard.increment_score()  # Increment score
